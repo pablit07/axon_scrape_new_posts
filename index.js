@@ -23,7 +23,7 @@ var url = 'https://www.facebook.com/axonsports/';
 // rtm.on(CLIENT_EVENTS.RTM.AUTHENTICATED, function (rtmStartData) {
 //   console.log(`Logged in as ${rtmStartData.self.name} of team ${rtmStartData.team.name}, but not yet connected to a channel`);
 // });
-exports.myHandler = function(event, context, callback) {
+// exports.myHandler = function(event, context, callback) {
 
 	var slack = new SlackClient('xoxb-83655554551-HJb1TpHv1FXu6WIkV5a0ZBIT');
 
@@ -52,10 +52,11 @@ exports.myHandler = function(event, context, callback) {
 		        	if ($(this).find('.timestampContent').text().match(/(min)/)) {
 		        		var post = $(this).find('.userContent p').text();
 		        		console.info(post);
+		        		var payload = {text: 'Axon posted on FB: '+post};
 		        		request.post({
 		        			headers: {'content-type' : 'application/x-www-form-urlencoded'},
 						  	url: ' https://hooks.slack.com/services/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',
-						  	body: 'payload={\"text\":' + '\"Axon posted on FB: ' + post + '\"}'
+						  	body: 'payload=' + JSON.stringify(payload)
 						}, function (err, res) {
 							if (err) {
 								throw err;
@@ -73,6 +74,6 @@ exports.myHandler = function(event, context, callback) {
 		});
 	}).done(function() {
 		console.info('Finished')
-		context.done(null,'');
+		// context.done(null,'');
 	});
-}
+// }
